@@ -1,33 +1,19 @@
-package com.rogalik.lines;
+package com.rogalik;
 
 public class FloatLines extends Lines {
 
-    private float min;
-    public float getMin() {
-        return min = Float.MAX_VALUE;
-    }
-
-    private float max;
-    public float getMax() {
-        return max = Float.MIN_VALUE;
-    }
-
-    private float sum;
-    public float getSum() {
-        return sum = 0;
-    }
-
-    private float middle;
-    public float getMiddle() {
-        return middle = 0;
-    }
+    private float min = Integer.MAX_VALUE;
+    private float max = Integer.MIN_VALUE;
+    private float sum = 0;
+    private float middle = 0;
 
     {
         filename = "floats";
     }
 
     @Override
-    public void addLine(String line, String[] words) {
+    public void addLine(String[] words) {
+        StringBuilder line = new StringBuilder();
         for (String word : words) {
             Float next_number = FloatLines.isFloat(word);
             if (next_number == null) {
@@ -41,9 +27,14 @@ public class FloatLines extends Lines {
             if (next_number > max) {
                 max = next_number;
             }
+            line.append(word).append(" ");
         }
         middle = sum / count;
-        lines.add(line);
+
+        if (!line.isEmpty() && line.charAt(line.length() - 1) == ' ') {
+            line.deleteCharAt(line.length() - 1);
+        }
+        lines.add(line.toString());
     }
 
     public static Float isFloat(String s) {
@@ -69,6 +60,6 @@ public class FloatLines extends Lines {
         System.out.println("Min: " + min);
         System.out.println("Max: " + max);
         System.out.println("Sum: " + sum);
-        System.out.println("Mid: " + middle);
+        System.out.println("Avg: " + middle);
     }
 }

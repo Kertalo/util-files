@@ -1,22 +1,17 @@
-package com.rogalik.lines;
+package com.rogalik;
 
 public class StringLines extends Lines {
 
     private int min = Integer.MAX_VALUE;
-    public int getMin() {
-        return min;
-    }
-
     private int max = Integer.MIN_VALUE;
-    public int getMax() {
-        return max;
-    }
+
     {
         filename = "strings";
     }
 
     @Override
-    public void addLine(String line, String[] words) {
+    public void addLine(String[] words) {
+        String line = String.join(" ", words);
         for (String word : words) {
             count++;
             if (word.length() < min) {

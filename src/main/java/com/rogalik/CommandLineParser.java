@@ -2,14 +2,34 @@ package com.rogalik;
 
 import java.util.LinkedList;
 
-public class CommandLine {
+public class CommandLineParser {
 
     private LinkedList<String> input_files = new LinkedList<>();
+    public LinkedList<String> getInputFiles() {
+        return input_files;
+    }
+
     private String output_prefix;
     private String output_path;
+
+    public String getOutputFileName() {
+        return output_path + (output_path.isEmpty() ? "" : "/") + output_prefix;
+    }
+
     private boolean is_append;
+    public boolean getIsAppend() {
+        return is_append;
+    }
+
     private boolean is_short_statistic;
+    public boolean getIsShortStatistic() {
+        return is_short_statistic;
+    }
+
     private boolean is_full_statistic;
+    public boolean getIsFullStatistic() {
+        return is_full_statistic;
+    }
 
     {
         output_prefix = "";
@@ -18,12 +38,8 @@ public class CommandLine {
         is_short_statistic = false;
         is_full_statistic = false;
     }
-    
-    public CommandLine(String[] args) {
-        Parser(args);
-    }
 
-    private void Parser(String[] args) {
+    public CommandLineParser(String[] args) {
         ArgMode arg_mode = ArgMode.INPUT_FILE;
 
         for (String arg : args) {

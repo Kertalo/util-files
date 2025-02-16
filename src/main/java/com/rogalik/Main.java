@@ -1,17 +1,31 @@
 package com.rogalik;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.LinkedList;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        CommandLineParser commandLineParser = new CommandLineParser(args);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        LinkedList<String> lines = new LinkedList<String>();
+        for (String filename : commandLineParser.getInputFiles()) {
+            lines.addAll(File.readFile(filename));
+        }
+
+        Distribution distribution = new Distribution();
+        distribution.sort(lines);
+
+        Lines[] distribution_lines = distribution.getLines();
+
+        String output_filename = commandLineParser.getOutputFileName();
+
+        for (Lines line : distribution_lines) {
+            if (line.getCount() > 0) {
+                File.writeFile(output_filename + line.filename + ".txt", line.getLines(), commandLineParser.getIsAppend());
+                if (commandLineParser.getIsFullStatistic())
+                    line.printFullStatistic();
+                else if (commandLineParser.getIsShortStatistic())
+                    line.printShortStatistic();
+            }
         }
     }
 }

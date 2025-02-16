@@ -1,4 +1,4 @@
-package com.rogalik.lines;
+package com.rogalik;
 
 import java.util.LinkedList;
 
@@ -14,11 +14,8 @@ public abstract class Lines {
     }
 
     protected String filename = "";
-    public String getFilename() {
-        return filename;
-    }
 
-    public abstract void addLine(String line, String[] words);
+    public abstract void addLine(String[] words);
 
     public abstract void printShortStatistic();
 

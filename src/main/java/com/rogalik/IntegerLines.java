@@ -1,33 +1,19 @@
-package com.rogalik.lines;
+package com.rogalik;
 
 public class IntegerLines extends Lines {
 
     private int min = Integer.MAX_VALUE;
-    public int getMin() {
-        return min;
-    }
-
     private int max = Integer.MIN_VALUE;
-    public int getMax() {
-        return max;
-    }
-
     private int sum = 0;
-    public int getSum() {
-        return sum;
-    }
-
     private float middle = 0;
-    public float getMiddle() {
-        return middle;
-    }
 
     {
         filename = "integers";
     }
 
     @Override
-    public void addLine(String line, String[] words) {
+    public void addLine(String[] words) {
+        StringBuilder line = new StringBuilder();
         for (String word : words) {
             Integer next_number = IntegerLines.isInteger(word);
             if (next_number == null) {
@@ -41,9 +27,14 @@ public class IntegerLines extends Lines {
             if (next_number > max) {
                 max = next_number;
             }
+            line.append(word).append(" ");
         }
         middle = sum / (float)count;
-        lines.add(line);
+
+        if (!line.isEmpty() && line.charAt(line.length() - 1) == ' ') {
+            line.deleteCharAt(line.length() - 1);
+        }
+        lines.add(line.toString());
     }
 
     public static Integer isInteger(String s) {
@@ -69,6 +60,6 @@ public class IntegerLines extends Lines {
         System.out.println("Min: " + min);
         System.out.println("Max: " + max);
         System.out.println("Sum: " + sum);
-        System.out.println("Mid: " + middle);
+        System.out.println("Avg: " + middle);
     }
 }
